@@ -23,5 +23,31 @@ const components = {
             }
         }
     },
-    
+    Link: {
+        baseStyle: props => ({
+            color: mode('#3d7aed', 'ff63c3')(props),
+            textUnderLineOffset: 3
+        })
+    }
 }
+
+const fonts = {
+    heading: "'M PLUS Rounded 1c'"
+}
+
+const colors = {
+    glassTeal: '#88ccca'
+}
+
+const config = {
+    initialColorMode: 'dark',
+    useSystemColorMode: true
+}
+
+const theme = extendedTheme({
+    config, 
+    styles,
+    components,
+    colors,
+    fonts
+})
