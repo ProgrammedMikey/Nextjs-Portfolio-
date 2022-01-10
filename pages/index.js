@@ -3,6 +3,7 @@ import {Button, Container, Box, Heading, Image, useColorModeValue, Link } from '
 import { ChevronRightIcon } from '@chakra-ui/icons'
 import Section from '../components/section'
 import Paragraph from '../components/paragraph'
+import {BioSection, BioYear } from '../components/bio'
 
 const Page = () => {
     return(
@@ -29,7 +30,7 @@ const Page = () => {
                     maxWidth="100px"
                     display="inline-block" 
                     borderRadius="full" 
-                    src="/images/takuya.jpg"
+                    src="/images/dasilva.jpg"
                     alt="Profile Image"
                 />
             </Box>
@@ -51,6 +52,30 @@ const Page = () => {
                      </Button>
                 </NextLink>
             </Box>
+        </Section>
+        
+        <Section delay={0.2}>
+            <Heading as="h3" variant="section-title">
+                Bio 
+            </Heading>
+            <BioSection>
+                <BioYear>1990</BioYear>
+                Born in Queens, New York.
+            </BioSection>
+            <BioSection>
+                <BioYear>2016</BioYear>
+                Completed the Bachelors Program in Information Technology at Florida Tech College
+            </BioSection>
+        </Section>
+        
+        <Section delay={0.3}>
+            <Heading as="h3" variant="section-title">
+                ♥
+            </Heading>
+            <Paragraph>
+                Art, Music,{' '}
+                Drawing, Playing Drums, Machine Learning
+            </Paragraph>
         </Section>
     </Container>
     )
