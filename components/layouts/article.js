@@ -23,6 +23,10 @@ const Layout = ({ children, title }) => (
                     <title>{title} - Michael Da Silva </title>
                 </Head>
             )}
+            {children}
+            <GridItemStyle />
         </>
     </motion.article>
 )
+
+export default Layout
