@@ -21,6 +21,96 @@ const VoxelDog = () => {
             20 * Math.cos(0.2 * Math.PI)
         )    
     )
+    const [scene] = useState(new THREE.Scene())
+    const [_controls, setControls] = useState()
+    
+    const handleWindowResize = useCallback(() => {
+        const { current: container } = refContainer
+        if (container && renderer) {
+            const scW = container.clientWidth 
+            const scH = container.clientHeight
+            
+            renderer.setSize(scW, scH)
+        }
+    }, [renderer])
+    
+    
+   // /* eslint-disable react-hooks/exhaustive-deps */
+    useEffect(() => {
+        const { current: container} = refContainer 
+        if (container && !renderer) {
+            const scW = container.clientWidth
+            const scH = container.clientHeight
+            
+            const renderer = new THREE.WebGLRenderer({
+                antialias: true, 
+                alpha: true 
+            })
+            renderer.setPixelRatio(window.devicePixelRatio)
+            renderer.setSize(scW, scH)
+            renderer.outputEncoding = THREE.sRGBEncoding
+            container.appendChild(renderer.domElement)
+            setRenderer(renderer)
+            
+            
+            const scale = scH * 0.005 + 4.8 
+            const camera = new THREE.OrthographicCamera(
+                -scale,
+                scale,
+                scale,
+                -scale,
+                0.01,
+                50000
+            )
+            camera.position.copy(initialCameraPosition)
+            camera.lookAt(target)
+            setCamera(camera)
+            
+            const ambientLight = new THREE.AmbientLight(0xcccccc, 1)
+            scene.add(ambientLight)
+            
+            const controls = new OrbitControls (camera, renderer.domElement)
+            controls.autoRotate = true
+            controls.target = target
+            setControls(controls)
+            
+            loadGLTFModel(scene, '/dog.glb', {
+                receiveShadow: false,
+                castShadow: false
+            }).then(() => { 
+                animate()
+                setLoading(false)
+            })
+            
+            let req = null
+            let frame = 0
+            const animate = () => {
+                req = requestAnimationFrame(animate)
+                
+                frame = frame <= 100 ? frame + 1 : frame
+                
+                if(frame <= 100) {
+                    const p = initialCameraPosition 
+                    const rotSpeed = -easeOutCirc(frame / 120) * Math.PI * 20
+                    
+                    camera.position.y = 10
+                    camera.position.x = p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed)
+                    camera.position.z = p.z * Math.cos(rotSpeed) - p.x * Math.sin(rotSpeed)
+                
+                    camera.lookAt(target)
+                } else {
+                    controls.update()
+                }
+                
+                renderer.render(scene, camera)
+            }
+            
+            return () => {
+                cancelAnimationFrame(req)
+                renderer.dispose()
+            }
+        }
+    }, [])
     
     return (
         <Box 
