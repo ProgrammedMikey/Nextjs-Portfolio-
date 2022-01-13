@@ -1,2 +1,6 @@
 node_modules/
 .c9
+.next
+.vercel
+.env
+dist

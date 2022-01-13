@@ -1,10 +1,24 @@
 import NextLink from 'next/link'
-import {Button, Container, Box, Heading, Image, useColorModeValue, Link } from '@chakra-ui/react'
+import {
+    Button, 
+    Container, 
+    Box, 
+    Heading,
+    Image,
+    Link, 
+    List,
+    ListItem,
+    SimpleGrid,
+    Icon,
+    useColorModeValue 
+} from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons'
 import Layout from '../components/layouts/article'
 import Section from '../components/section'
 import Paragraph from '../components/paragraph'
 import {BioSection, BioYear } from '../components/bio'
+import { GridItem } from '../components/grid-item'
+import { IoLogoGithub } from 'react-icons/io5'
 
 const Page = () => {
     return(
@@ -78,6 +92,21 @@ const Page = () => {
                     Art, Music,{' '}
                     Drawing, Playing Drums, Machine Learning
                 </Paragraph>
+            </Section>
+            
+            <Section delay={0.3}>
+                <Heading as="h3" variant="section-title">
+                On the Web 
+                </Heading>
+                <List>
+                    <ListItem>
+                        <Link href="https://github.com/programmedmikey" target="_blank">
+                            <Button variant="ghost" colorScheme="teal" leftIcon={<Icon as={IoLogoGithub} />}>
+                            @programmedmikey
+                            </Button>
+                        </Link>
+                    </ListItem>
+                </List>
             </Section>
         </Container>
     </Layout>
